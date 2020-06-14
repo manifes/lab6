@@ -1,0 +1,86 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<!--<div style="text-align:center">-->
+  <!--<h1>-->
+    <!--Welcome to {{ title }}!-->
+  <!--</h1>-->
+  <!--<img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">-->
+<!--</div>-->
+<div class="my-messages">
+  <div class="message-block" style="float: left; margin-bottom: 20px;">
+    <div class="filter">
+      <div class="title">FILTER</div>
+      <div class="search" style="float: left; width: 310px; padding: 5px;">
+        <input type="text" class="form-control" placeholder="Search by name ..." [(ngModel)]="filterSearch"/>
+      </div>
+      <div class="select1" style="float: left; width: 200px; padding: 5px;">
+        <select [(ngModel)]="filterType" class="form-control">
+          <option value="">All types</option>
+          <option *ngFor="let type of typesList" [value]="type">{{type}}</option>
+        </select>
+      </div>
+      <div class="select2" style="float: left; width: 325px; padding: 5px;">
+        <!--<select class="form-control">-->
+          <!--<option *ngFor="let manuf of manufList; let i = index" value="{{manuf}}">{{manuf}}</option>-->
+        <!--</select>-->
+        <select [(ngModel)]="filterManuf" class="form-control">
+          <option value="">All manufacturers</option>
+          <option *ngFor="let manuf of manufList" [value]="manuf">{{manuf}}</option>
+        </select>
+      </div>
+      <div class="from" style="float: left; width: 195px; padding: 5px;">
+        <input type="number" class="form-control" placeholder="From price" [(ngModel)]="fromPrice"/>
+      </div>
+      <div class="to" style="float: left; width: 195px; padding: 5px;">
+        <input type="number" class="form-control" placeholder="To price" [(ngModel)]="toPrice"/>
+      </div>
+    </div>
+    <div class="clear-fix" style="width: 100%; float: left;"></div>
+  </div>
+  <div style="float: left;">
+    {{filterManuf}}
+  </div>
+</div>
+<div class="my-messages">
+  <!--<div class="my-messages-title"><h1>Medicine:</h1></div>-->
+  <div class="message-block">
+    <div class="columns">
+      <div class="name">Name</div>
+      <div class="type">Type</div>
+      <div class="manufacturer">Manufacturer</div>
+      <div class="date">Date</div>
+      <div class="price">Price</div>
+    </div>
+    <div class="clearfix" style="width: 100%; float: left;"></div>
+    <div class="message"
+         *ngFor="let message of drugList | myfilter:{name: filterSearch, type: filterType, manufacturer: filterManuf,
+         fromPrice: fromPrice, toPrice: toPrice}"
+         [ngClass]="{'hidden': message.id != detailsId}">
+      <div class="info" style="float: left;" (click)="openDetails(message.id)">
+        <div class="name">{{message.name}}</div>
+        <div class="type">{{message.type}}</div>
+        <div class="manufacturer">{{message.manufacturer}}</div>
+        <div class="date">{{message.date}}</div>
+        <div class="price">{{message.price}} MDL</div>
+      </div>
+      <div class="details">
+        <div class="drug-image">
+          <img src="assets/images/test.png"/>
+        </div>
+        <div class="description">
+          <span style="font-weight: bold; font-size: 18px;">Details: </span>
+          <span>{{message.description}}</span>
+        </div>
+      </div>
+      <!--<div class="user-avatar">-->
+        <!--<img src="assets/images/test.png"/>-->
+      <!--</div>-->
+      <!--<div class="message-info">-->
+        <!--<div class="friend-name">Vladimir Murzac</div>-->
+        <!--<div class="message-date">2018-05-16</div>-->
+        <!--<div class="message-text">Tests message</div>-->
+      <!--</div>-->
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
